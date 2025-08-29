@@ -13,7 +13,6 @@ public class OrderLine extends BaseEntity {
     private double unitPrice;
     private int quantity;
 
-    @JsonBackReference
     @ManyToOne
     private Order order;
 
