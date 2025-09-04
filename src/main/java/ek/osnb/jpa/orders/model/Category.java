@@ -1,9 +1,10 @@
 package ek.osnb.jpa.orders.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -14,6 +15,18 @@ public class Category {
 
     private String name;
 
+    //TODO doesn't work, make DTO
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
+
+    void addProduct(Product p) {
+        products.add(p);
+    }
+
+    void removeProduct(Product p) {
+        products.remove(p);
+    }
 
     public Long getId() {
         return id;
@@ -29,5 +42,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }
